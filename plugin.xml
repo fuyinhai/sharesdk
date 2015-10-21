@@ -1,126 +1,349 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="sharesdk" 
-  version="0.0.1" 
-  xmlns="http://apache.org/cordova/ns/plugins/1.0" 
-  xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="sharesdk"
+        version="0.0.1"
+        xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <name>ShareSdk</name>
-  <description>ShareSdk</description>
-  <author>fuyh@asto-inc.com</author>
-  <license>MIT</license>
-  <keywords>sharesdk</keywords>
-  <repo>https://github.com/fuyinhai/sharesdk</repo>
-  <issue>https://github.com/fuyinhai/sharesdk/issues</issue>
+    <name>ShareSdk</name>
+    <description>ShareSdk</description>
+    <author>fuyh@asto-inc.com</author>
+    <license>MIT</license>
+    <keywords>sharesdk</keywords>
+    <repo>https://github.com/fuyinhai/sharesdk</repo>
+    <issue>https://github.com/fuyinhai/sharesdk/issues</issue>
 
-  <engines>
-    <engine name="cordova" version=">=2.9" />
-  </engines>
+    <engines>
+        <engine name="cordova" version=">=2.9"/>
+    </engines>
 
-  <preference name="SHARESDK_APPKEY"                    />
-  <preference name="SHARESDK_SINAWEIBO_APPKEY"          />
-  <preference name="SHARESDK_SINAWEIBO_APPSECRET"       />
-  <preference name="SHARESDK_SINAWEIBO_REDIRECTURL"     />
-  <preference name="SHARESDK_WECHAT_APPID"              />
-  <preference name="SHARESDK_WECHAT_APPSECRET"          />
-  <preference name="SHARESDK_WECHATMOMENTS_APPID"       />
-  <preference name="SHARESDK_WECHATMOMENTS_APPSECRET"   />   
+    <preference name="SHARESDK_APPKEY"/>
+    <preference name="SHARESDK_SINAWEIBO_APPKEY"/>
+    <preference name="SHARESDK_SINAWEIBO_APPSECRET"/>
+    <preference name="SHARESDK_SINAWEIBO_REDIRECTURL"/>
+    <preference name="SHARESDK_WECHAT_APPID"/>
+    <preference name="SHARESDK_WECHAT_APPSECRET"/>
+    <preference name="SHARESDK_WECHATMOMENTS_APPID"/>
+    <preference name="SHARESDK_WECHATMOMENTS_APPSECRET"/>
 
-  <js-module name="ShareSdk" src="www/ShareSdk.js">
-    <clobbers target="cordova.plugins.ShareSdk" />
-  </js-module>
+    <js-module name="ShareSdk" src="www/ShareSdk.js">
+        <clobbers target="cordova.plugins.ShareSdk"/>
+    </js-module>
 
-  <platform name="android">
-    <config-file parent="/*" target="res/xml/config.xml">
-      <feature name="ShareSdk">
-        <param name="android-package" value="com.yuanbaopu.databox.ShareSdkPlugin" />        
-        <param name="onload" value="true" />
-      </feature>
-    </config-file>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="ShareSdk">
+                <param name="android-package" value="com.yuanbaopu.databox.ShareSdkPlugin"/>
+                <param name="onload" value="true"/>
+            </feature>
+        </config-file>
 
-    <config-file target="AndroidManifest.xml" parent="/*">
-    	<uses-permission android:name="android.permission.GET_TASKS" />
-        <uses-permission android:name="android.permission.INTERNET" />
-        <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-        <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-        <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-        <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
-        <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    </config-file>
-    <config-file target="AndroidManifest.xml" parent="/manifest/application">
-        <activity
-            android:name="com.mob.tools.MobUIShell"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
-            <!-- 
-            	Adapter表示一个继承自cn.sharesdk.framework.authorize.AuthorizeAdapter的类，
-            	这个类可以监听到页面的生命周期，也可以获取授权页面的各种UI控件。 
-            	开发者可以通过继承AuthorizeAdapter，重写其方法，并获取各种UI来自定义这个页面的行为。
-            <meta-data android:name="Adapter" android:value="cn.sharesdk.demo.MyAdapter" />            
-            -->
-            <!--
-            	Dropbox的SSO功能需要在此处添加一个对ACTION_VIEW事件的过滤器，其中的scheme是
-            	“db-”前缀再开发者应用的加上appKey。如果此过滤器不设置，则不能完成SSO功能授权
-            -->
-            <intent-filter>
-                <data android:scheme="tencent100371282" />
-                <action android:name="android.intent.action.VIEW" />
-        	<category android:name="android.intent.category.BROWSABLE"/>
-        	<category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".wxapi.WXEntryActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <meta-data android:name="ShareSDK_AppKey"                    android:value="VPREFIX_$SHARESDK_APPKEY" />
-        <meta-data android:name="ShareSDK_SinaWeibo_AppKey"          android:value="VPREFIX_$SHARESDK_SINAWEIBO_APPKEY" />
-        <meta-data android:name="ShareSDK_SinaWeibo_AppSecret"       android:value="VPREFIX_$SHARESDK_SINAWEIBO_APPSECRET" />
-        <meta-data android:name="ShareSDK_SinaWeibo_RedirectUrl"     android:value="VPREFIX_$SHARESDK_SINAWEIBO_REDIRECTURL" />
-        <meta-data android:name="ShareSDK_Wechat_AppId"              android:value="VPREFIX_$SHARESDK_WECHAT_APPID" />
-        <meta-data android:name="ShareSDK_Wechat_AppSecret"          android:value="VPREFIX_$SHARESDK_WECHAT_APPSECRET" />
-        <meta-data android:name="ShareSDK_WechatMoments_AppId"       android:value="VPREFIX_$SHARESDK_WECHATMOMENTS_APPID" />
-        <meta-data android:name="ShareSDK_WechatMoments_AppSecret"   android:value="VPREFIX_$SHARESDK_WECHATMOMENTS_APPSECRET" />            
-    </config-file>
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.GET_TASKS"/>
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+            <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+            <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+            <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+            <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity
+                    android:name="com.mob.tools.MobUIShell"
+                    android:theme="@android:style/Theme.Translucent.NoTitleBar"
+                    android:configChanges="keyboardHidden|orientation|screenSize"
+                    android:windowSoftInputMode="stateHidden|adjustResize">
+                <!--
+                    Adapter表示一个继承自cn.sharesdk.framework.authorize.AuthorizeAdapter的类，
+                    这个类可以监听到页面的生命周期，也可以获取授权页面的各种UI控件。
+                    开发者可以通过继承AuthorizeAdapter，重写其方法，并获取各种UI来自定义这个页面的行为。
+                <meta-data android:name="Adapter" android:value="cn.sharesdk.demo.MyAdapter" />
+                -->
+                <!--
+                    Dropbox的SSO功能需要在此处添加一个对ACTION_VIEW事件的过滤器，其中的scheme是
+                    “db-”前缀再开发者应用的加上appKey。如果此过滤器不设置，则不能完成SSO功能授权
+                -->
+                <intent-filter>
+                    <data android:scheme="tencent100371282"/>
+                    <action android:name="android.intent.action.VIEW"/>
+                    <category android:name="android.intent.category.BROWSABLE"/>
+                    <category android:name="android.intent.category.DEFAULT"/>
+                </intent-filter>
+            </activity>
+            <activity
+                    android:name=".wxapi.WXEntryActivity"
+                    android:configChanges="keyboardHidden|orientation|screenSize"
+                    android:exported="true"
+                    android:screenOrientation="portrait"
+                    android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            <meta-data android:name="ShareSDK_AppKey" android:value="VPREFIX_$SHARESDK_APPKEY"/>
+            <meta-data android:name="ShareSDK_SinaWeibo_AppKey" android:value="VPREFIX_$SHARESDK_SINAWEIBO_APPKEY"/>
+            <meta-data android:name="ShareSDK_SinaWeibo_AppSecret" android:value="VPREFIX_$SHARESDK_SINAWEIBO_APPSECRET"/>
+            <meta-data android:name="ShareSDK_SinaWeibo_RedirectUrl" android:value="VPREFIX_$SHARESDK_SINAWEIBO_REDIRECTURL"/>
+            <meta-data android:name="ShareSDK_Wechat_AppId" android:value="VPREFIX_$SHARESDK_WECHAT_APPID"/>
+            <meta-data android:name="ShareSDK_Wechat_AppSecret" android:value="VPREFIX_$SHARESDK_WECHAT_APPSECRET"/>
+            <meta-data android:name="ShareSDK_WechatMoments_AppId" android:value="VPREFIX_$SHARESDK_WECHATMOMENTS_APPID"/>
+            <meta-data android:name="ShareSDK_WechatMoments_AppSecret" android:value="VPREFIX_$SHARESDK_WECHATMOMENTS_APPSECRET"/>
+        </config-file>
 
-    <source-file src="src/android/ShareSdkPlugin.java"   target-dir="src/com/yuanbaopu/databox"     />
-    <source-file src="src/android/libs/MobTools.jar"                       target-dir="libs"/>
-    <source-file src="src/android/libs/MobLogCollector.jar"                target-dir="libs"/>
-    <source-file src="src/android/libs/ShareSDK-Core-2.6.3.jar"            target-dir="libs"/>
-    <source-file src="src/android/libs/ShareSDK-SinaWeibo-2.6.3.jar"       target-dir="libs"/>
-    <source-file src="src/android/libs/ShareSDK-Wechat-2.6.3.jar"          target-dir="libs"/>
-    <source-file src="src/android/libs/ShareSDK-Wechat-Core-2.6.3.jar"     target-dir="libs"/>
-    <source-file src="src/android/libs/ShareSDK-Wechat-Favorite-2.6.3.jar" target-dir="libs"/>
-    <source-file src="src/android/libs/ShareSDK-Wechat-Moments-2.6.3.jar"  target-dir="libs"/>
-    
-    <source-file src="src/android/libs/arm64-v8a/libweibosdkcore.so"    target-dir="libs/arm64-v8a"/>
-    <source-file src="src/android/libs/armeabi/libweibosdkcore.so"      target-dir="libs/armeabi"/>
-    <source-file src="src/android/libs/armeabi-v7a/libweibosdkcore.so"  target-dir="libs/armeabi-v7a"/>
-    <source-file src="src/android/libs/x86/libweibosdkcore.so"          target-dir="libs/x86"/>
-    <source-file src="src/android/libs/x86_64/libweibosdkcore.so"       target-dir="libs/x86_64"/>
-    
-  </platform>
-  
-  <platform name="ios">
-    <config-file parent="/*" target="config.xml">
-      <feature name="ShareSdk">
-        <param name="ios-package" value="CDVShareSDK" />
-        <param name="onload" value="true" />
-      </feature>
-        <preference name="SHARESDK_APPKEY"                    value="$SHARESDK_APPKEY" />
-        <preference name="SHARESDK_SINAWEIBO_APPKEY"          value="$SHARESDK_SINAWEIBO_APPKEY" />
-        <preference name="SHARESDK_SINAWEIBO_APPSECRET"       value="$SHARESDK_SINAWEIBO_APPSECRET" />
-        <preference name="SHARESDK_SINAWEIBO_REDIRECTURL"     value="$SHARESDK_SINAWEIBO_REDIRECTURL" />
-        <preference name="SHARESDK_WECHAT_APPID"              value="$SHARESDK_WECHAT_APPID" />
-        <preference name="SHARESDK_WECHAT_APPSECRET"          value="$SHARESDK_WECHAT_APPSECRET" />
-        <preference name="SHARESDK_WECHATMOMENTS_APPID"       value="$SHARESDK_WECHATMOMENTS_APPID" />
-        <preference name="SHARESDK_WECHATMOMENTS_APPSECRET"   value="$SHARESDK_WECHATMOMENTS_APPSECRET" />            
-    </config-file>
-    
+        <source-file src="src/android/ShareSdkPlugin.java" target-dir="src/com/yuanbaopu/databox"/>
+        <source-file src="src/android/libs/MobTools.jar" target-dir="libs"/>
+        <source-file src="src/android/libs/MobLogCollector.jar" target-dir="libs"/>
+        <source-file src="src/android/libs/ShareSDK-Core-2.6.3.jar" target-dir="libs"/>
+        <source-file src="src/android/libs/ShareSDK-SinaWeibo-2.6.3.jar" target-dir="libs"/>
+        <source-file src="src/android/libs/ShareSDK-Wechat-2.6.3.jar" target-dir="libs"/>
+        <source-file src="src/android/libs/ShareSDK-Wechat-Core-2.6.3.jar" target-dir="libs"/>
+        <source-file src="src/android/libs/ShareSDK-Wechat-Favorite-2.6.3.jar" target-dir="libs"/>
+        <source-file src="src/android/libs/ShareSDK-Wechat-Moments-2.6.3.jar" target-dir="libs"/>
+
+        <source-file src="src/android/src/cn/sharesdk/onekeyshare/theme/classic/EditPage.java" target-dir="src/cn/sharesdk/onekeyshare/theme/classic"/>
+        <source-file src="src/android/src/cn/sharesdk/onekeyshare/theme/classic/FollowListPage.java" target-dir="src/cn/sharesdk/onekeyshare/theme/classic"/>
+        <source-file src="src/android/src/cn/sharesdk/onekeyshare/theme/classic/PlatformGridView.java" target-dir="src/cn/sharesdk/onekeyshare/theme/classic"/>
+        <source-file src="src/android/src/cn/sharesdk/onekeyshare/theme/classic/PlatformListPage.java" target-dir="src/cn/sharesdk/onekeyshare/theme/classic"/>
+
+        <source-file src="src/android/src/cn/sharesdk/onekeyshare/theme/skyblue/EditPage.java" target-dir="src/cn/sharesdk/onekeyshare/theme/skyblue"/>
+        <source-file src="src/android/src/cn/sharesdk/onekeyshare/theme/skyblue/FollowListPage.java" target-dir="src/cn/sharesdk/onekeyshare/theme/skyblue"/>
+        <source-file src="src/android/src/cn/sharesdk/onekeyshare/theme/skyblue/PlatformGridViewAdapter.java"
+                     target-dir="src/cn/sharesdk/onekeyshare/theme/skyblue"/>
+        <source-file src="src/android/src/cn/sharesdk/onekeyshare/theme/skyblue/PlatformListPage.java" target-dir="src/cn/sharesdk/onekeyshare/theme/skyblue"/>
+
+
+        <source-file src="src/android/src/cn/sharesdk/onekeyshare/CustomerLogo.java" target-dir="src/cn/sharesdk/onekeyshare"/>
+        <source-file src="src/android/src/cn/sharesdk/onekeyshare/EditPageFakeActivity.java" target-dir="src/cn/sharesdk/onekeyshare"/>
+        <source-file src="src/android/src/cn/sharesdk/onekeyshare/FollowerListFakeActivity.java" target-dir="src/cn/sharesdk/onekeyshare"/>
+        <source-file src="src/android/src/cn/sharesdk/onekeyshare/OnekeyShare.java" target-dir="src/cn/sharesdk/onekeyshare"/>
+        <source-file src="src/android/src/cn/sharesdk/onekeyshare/OnekeyShareTheme.java" target-dir="src/cn/sharesdk/onekeyshare"/>
+        <source-file src="src/android/src/cn/sharesdk/onekeyshare/PicViewer.java" target-dir="src/cn/sharesdk/onekeyshare"/>
+        <source-file src="src/android/src/cn/sharesdk/onekeyshare/PlatformListFakeActivity.java" target-dir="src/cn/sharesdk/onekeyshare"/>
+        <source-file src="src/android/src/cn/sharesdk/onekeyshare/ReflectableShareContentCustomizeCallback.java" target-dir="src/cn/sharesdk/onekeyshare"/>
+        <source-file src="src/android/src/cn/sharesdk/onekeyshare/Shake2Share.java" target-dir="src/cn/sharesdk/onekeyshare"/>
+        <source-file src="src/android/src/cn/sharesdk/onekeyshare/ShareContentCustomizeCallback.java" target-dir="src/cn/sharesdk/onekeyshare"/>
+        <source-file src="src/android/src/cn/sharesdk/onekeyshare/ShareCore.java" target-dir="src/cn/sharesdk/onekeyshare"/>
+        <source-file src="src/android/src/cn/sharesdk/onekeyshare/ThemeShareCallback.java" target-dir="src/cn/sharesdk/onekeyshare"/>
+
+        <source-file src="src/android/src/com/yuanbaopu/app/wxapi/WXEntryActivity.java" target-dir="src/com/yuanbaopu/app/wxapi"/>
+
+        <source-file src="src/android/res/drawable/classic_platform_corners_bg.xml" target-dir="res/drawable"/>
+        <source-file src="src/android/res/drawable/skyblue_platform_list_item.xml" target-dir="res/drawable"/>
+        <source-file src="src/android/res/drawable/skyblue_platform_list_item_selected.xml" target-dir="res/drawable"/>
+        <source-file src="src/android/res/drawable/skyblue_platform_list_selector.xml" target-dir="res/drawable"/>
+        <source-file src="src/android/res/drawable/ssdk_recomm_def_app_image.xml" target-dir="res/drawable"/>
+        <source-file src="src/android/res/drawable/ssdk_recomm_friends_share_msg.xml" target-dir="res/drawable"/>
+
+        <source-file src="src/android/res/drawable-hdpi/ssdk_oks_ptr_ptr.png" target-dir="res/drawable-hdpi"/>
+
+        <source-file src="src/android/res/drawable-xhdpi/auth_follow_cb_chd.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/auth_follow_cb_unc.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/auth_title_back.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/blue_point.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/btn_back_nor.9.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/edittext_back.9.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/img_cancel.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/light_blue_point.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_alipay.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_bluetooth.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_douban.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_dropbox.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_email.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_evernote.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_facebook.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_facebookmessenger.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_flickr.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_foursquare.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_googleplus.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_instagram.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_instapaper.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_kaixin.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_kakaostory.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_kakaotalk.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_laiwang.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_laiwangmoments.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_line.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_linkedin.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_mingdao.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_pinterest.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_pocket.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_qq.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_qzone.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_renren.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_shortmessage.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_sinaweibo.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_sohusuishenkan.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_tencentweibo.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_tumblr.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_twitter.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_vkontakte.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_wechat.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_wechatfavorite.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_wechatmoments.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_whatsapp.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_yixin.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_yixinmoments.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/logo_youdao.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/pin.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_actionbar_back_btn.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_actionbar_ok_btn.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_editpage_bg.9.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_editpage_close.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_editpage_divider.9.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_editpage_image_bg.9.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_editpage_image_remove.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_alipayshare.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_alipayshare_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_baidutieba.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_baidutieba_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_bluetooth.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_bluetooth_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_douban.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_douban_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_dropbox.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_dropbox_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_email.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_email_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_evernote.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_evernote_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_facebook.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_facebook_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_facebookmessenger.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_facebookmessenger_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_flickr.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_flickr_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_foursquare.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_foursquare_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_googleplus.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_googleplus_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_instagram.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_instagram_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_instapaper.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_instapaper_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_kaixin.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_kaixin_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_kakaostory.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_kakaostory_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_kakaotalk.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_kakaotalk_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_laiwangmoments.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_laiwangmoments_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_line.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_line_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_linkedin.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_linkedin_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_mingdao.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_mingdao_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_neteasemicroblog.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_neteasemicroblog_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_pinterest.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_pinterest_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_pocket.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_pocket_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_qq.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_qq_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_qzone.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_qzone_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_renren.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_renren_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_shortmessage.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_shortmessage_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_sinaweibo.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_sinaweibo_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_sohumicroblog.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_sohumicroblog_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_sohusuishenkan.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_sohusuishenkan_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_tencentweibo.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_tencentweibo_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_tumblr.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_tumblr_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_twitter.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_twitter_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_vkontakte.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_vkontakte_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_wechat.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_wechat_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_wechatfavorite.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_wechatfavorite_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_wechatmoments.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_wechatmoments_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_whatsapp.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_whatsapp_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_yixin.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_yixin_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_yixinmoments.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_yixinmoments_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_youdao.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_logo_youdao_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_platform_checked.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/skyblue_platform_checked_disabled.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_auth_title_back.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_back_arr.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_logo.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_oks_shake_to_share_back.xml" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_oks_yaoyiyao.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_recomm_back.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_recomm_btn_bg.9.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_recomm_def_ad_image.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_recomm_def_app_logo.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_recomm_def_avatar.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_recomm_def_plat_logo.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_recomm_download_app.9.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_recomm_list_item_back.9.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_recomm_list_item_back_bottom.9.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_recomm_list_item_back_top.9.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_recomm_list_item_mask.9.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_recomm_plats_less.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_recomm_plats_more.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_recomm_result_back.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_recomm_share_fail_cn.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_recomm_share_fail_en.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_recomm_share_success_cn.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_recomm_share_success_en.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_recomm_title_back.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/ssdk_title_div.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/title_back.png" target-dir="res/drawable-xhdpi"/>
+        <source-file src="src/android/res/drawable-xhdpi/title_shadow.png" target-dir="res/drawable-xhdpi"/>
+
+        <source-file src="src/android/res/layout/skyblue_editpage.xml" target-dir="res/layout"/>
+        <source-file src="src/android/res/layout/skyblue_editpage_at_layout.xml" target-dir="res/layout"/>
+        <source-file src="src/android/res/layout/skyblue_editpage_inc_image_layout.xml" target-dir="res/layout"/>
+        <source-file src="src/android/res/layout/skyblue_share_actionbar.xml" target-dir="res/layout"/>
+        <source-file src="src/android/res/layout/skyblue_share_platform_list.xml" target-dir="res/layout"/>
+        <source-file src="src/android/res/layout/skyblue_share_platform_list_item.xml" target-dir="res/layout"/>
+
+        <source-file src="src/android/res/values/instapaper_strings.xml" target-dir="res/values"/>
+        <source-file src="src/android/res/values/oks_strings.xml" target-dir="res/values"/>
+        <source-file src="src/android/res/values/ssdk_recomm_strings.xml" target-dir="res/values"/>
+        <source-file src="src/android/res/values/ssdk_strings.xml" target-dir="res/values"/>
+
+        <source-file src="src/android/res/values-en/oks_strings.xml" target-dir="res/values-en"/>
+        <source-file src="src/android/res/values-en/ssdk_recomm_strings.xml" target-dir="res/values-en"/>
+        <source-file src="src/android/res/values-en/ssdk_strings.xml" target-dir="res/values-en"/>
+
+
+        <source-file src="src/android/libs/arm64-v8a/libweibosdkcore.so" target-dir="libs/arm64-v8a"/>
+        <source-file src="src/android/libs/armeabi/libweibosdkcore.so" target-dir="libs/armeabi"/>
+        <source-file src="src/android/libs/armeabi-v7a/libweibosdkcore.so" target-dir="libs/armeabi-v7a"/>
+        <source-file src="src/android/libs/x86/libweibosdkcore.so" target-dir="libs/x86"/>
+        <source-file src="src/android/libs/x86_64/libweibosdkcore.so" target-dir="libs/x86_64"/>
+
+    </platform>
+
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="ShareSdk">
+                <param name="ios-package" value="CDVShareSDK"/>
+                <param name="onload" value="true"/>
+            </feature>
+            <preference name="SHARESDK_APPKEY" value="$SHARESDK_APPKEY"/>
+            <preference name="SHARESDK_SINAWEIBO_APPKEY" value="$SHARESDK_SINAWEIBO_APPKEY"/>
+            <preference name="SHARESDK_SINAWEIBO_APPSECRET" value="$SHARESDK_SINAWEIBO_APPSECRET"/>
+            <preference name="SHARESDK_SINAWEIBO_REDIRECTURL" value="$SHARESDK_SINAWEIBO_REDIRECTURL"/>
+            <preference name="SHARESDK_WECHAT_APPID" value="$SHARESDK_WECHAT_APPID"/>
+            <preference name="SHARESDK_WECHAT_APPSECRET" value="$SHARESDK_WECHAT_APPSECRET"/>
+            <preference name="SHARESDK_WECHATMOMENTS_APPID" value="$SHARESDK_WECHATMOMENTS_APPID"/>
+            <preference name="SHARESDK_WECHATMOMENTS_APPSECRET" value="$SHARESDK_WECHATMOMENTS_APPSECRET"/>
+        </config-file>
+
         <config-file target="*-Info.plist" parent="CFBundleURLTypes">
             <array>
                 <dict>
@@ -149,21 +372,21 @@
         </config-file>
 
         <!-- Plugin source code -->
-        <header-file src="src/ios/CDVShareSDK.h" />
-        <source-file src="src/ios/CDVShareSDK.m" />
+        <header-file src="src/ios/CDVShareSDK.h"/>
+        <source-file src="src/ios/CDVShareSDK.m"/>
 
-         <!-- Wechat Official -->
-        <header-file src="src/ios/libs/ShareSDK/Extend/WeChatSDK/WXApi.h" />
-        <header-file src="src/ios/libs/ShareSDK/Extend/WeChatSDK/WXApiObject.h" />
-        <source-file src="src/ios/libs/ShareSDK/Extend/WeChatSDK/libWeChatSDK.a" framework="true" />
-        <resource-file src="src/ios/libs/ShareSDK/UI/ShareSDKFlatShareViewUI.bundle" />
-        <resource-file src="src/ios/libs/ShareSDK/Core/zh-Hans.lproj/ShareSDKLocalizable.strings" />
-        <resource-file src="src/ios/libs/ShareSDK/Core/Resource.bundle" />
-        <resource-file src="src/ios/libs/ShareSDK/Extend/QQConnectSDK/TencentOpenApi_IOS_Bundle.bundle" />
+        <!-- Wechat Official -->
+        <header-file src="src/ios/libs/ShareSDK/Extend/WeChatSDK/WXApi.h"/>
+        <header-file src="src/ios/libs/ShareSDK/Extend/WeChatSDK/WXApiObject.h"/>
+        <source-file src="src/ios/libs/ShareSDK/Extend/WeChatSDK/libWeChatSDK.a" framework="true"/>
+        <resource-file src="src/ios/libs/ShareSDK/UI/ShareSDKFlatShareViewUI.bundle"/>
+        <resource-file src="src/ios/libs/ShareSDK/Core/zh-Hans.lproj/ShareSDKLocalizable.strings"/>
+        <resource-file src="src/ios/libs/ShareSDK/Core/Resource.bundle"/>
+        <resource-file src="src/ios/libs/ShareSDK/Extend/QQConnectSDK/TencentOpenApi_IOS_Bundle.bundle"/>
         <!-- Sina Official -->
-        <header-file src="src/ios/libs/ShareSDK/Extend/SinaWeiboSDK/WeiboSDK.h" />
-        <source-file src="src/ios/libs/ShareSDK/Extend/SinaWeiboSDK/libWeiboSDK.a" framework="true" />
-        <resource-file src="src/ios/libs/ShareSDK/Extend/SinaWeiboSDK/WeiboSDK.bundle" />
+        <header-file src="src/ios/libs/ShareSDK/Extend/SinaWeiboSDK/WeiboSDK.h"/>
+        <source-file src="src/ios/libs/ShareSDK/Extend/SinaWeiboSDK/libWeiboSDK.a" framework="true"/>
+        <resource-file src="src/ios/libs/ShareSDK/Extend/SinaWeiboSDK/WeiboSDK.bundle"/>
         <!-- ShareSDK -->
         <framework src="src/ios/libs/ShareSDK/ShareSDK.framework" custom="true"/>
         <framework src="src/ios/libs/ShareSDK/Connection/CopyConnection.framework" custom="true"/>
@@ -180,20 +403,20 @@
         <framework src="src/ios/libs/ShareSDK/UI/ShareSDKShareActionSheet.framework" custom="true"/>
         <framework src="src/ios/libs/ShareSDK/UI/ShareSDKFlatShareViewUI.framework" custom="true"/>
         <framework src="src/ios/libs/ShareSDK/Extend/QQConnectSDK/TencentOpenAPI.framework" custom="true"/>
-        
+
         <!-- Other required frameworks -->
-        <framework src="libz.1.2.5.dylib" />
-        <framework src="MessageUI.framework" />
+        <framework src="libz.1.2.5.dylib"/>
+        <framework src="MessageUI.framework"/>
         <framework src="SystemConfiguration.framework"/>
-        <framework src="Security.framework"  />
-        <framework src="libstdc++.dylib" />
-        <framework src="QuartzCore.framework"  />
-        <framework src="CoreTelephony.framework"  />
-        <framework src="libicucore.dylib" />
-        <framework src="JavaScriptCore.framework" />
-        <framework src="CoreText.framework"  />
-        <framework src="libsqlite3.dylib" />
-        <framework src="ImageIO.framework" />
-        
+        <framework src="Security.framework"/>
+        <framework src="libstdc++.dylib"/>
+        <framework src="QuartzCore.framework"/>
+        <framework src="CoreTelephony.framework"/>
+        <framework src="libicucore.dylib"/>
+        <framework src="JavaScriptCore.framework"/>
+        <framework src="CoreText.framework"/>
+        <framework src="libsqlite3.dylib"/>
+        <framework src="ImageIO.framework"/>
+
     </platform>
 </plugin>
