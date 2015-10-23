@@ -355,20 +355,28 @@
                     <array>
                         <string>$SHARESDK_WECHAT_APPID</string>
                     </array>
-
-                    <key>LSApplicationQueriesSchemes</key>
-                    <array>
-                        <string>weixin</string>
-                        <string>wechat</string>
-                    </array>
-
-                    <key>NSAppTransportSecurity</key>
-                    <dict>
-                        <key>NSAllowsArbitraryLoads</key>
-                        <true/>
-                    </dict>
                 </dict>
             </array>
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
+            <array>
+                <string>weixin</string>
+                <string>wechat</string>
+                <string>sinaweibo</string>
+                <string>sinaweibohd</string>
+                <string>sinaweibosso</string>
+                <string>sinaweibohdsso</string>
+                <string>weibosdk</string>
+                <string>weibosdk2.5</string>
+            </array>
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="NSAppTransportSecurity">
+            <dict>
+                <key>NSAllowsArbitraryLoads</key>
+                <true/>
+            </dict>
         </config-file>
 
         <!-- Plugin source code -->
