@@ -122,8 +122,6 @@
         <source-file src="src/android/src/cn/sharesdk/onekeyshare/ShareCore.java" target-dir="src/cn/sharesdk/onekeyshare"/>
         <source-file src="src/android/src/cn/sharesdk/onekeyshare/ThemeShareCallback.java" target-dir="src/cn/sharesdk/onekeyshare"/>
 
-        <source-file src="src/android/src/com/yuanbaopu/app/wxapi/WXEntryActivity.java" target-dir="src/com/yuanbaopu/app/wxapi"/>
-
         <source-file src="src/android/res/drawable/classic_platform_corners_bg.xml" target-dir="res/drawable"/>
         <source-file src="src/android/res/drawable/skyblue_platform_list_item.xml" target-dir="res/drawable"/>
         <source-file src="src/android/res/drawable/skyblue_platform_list_item_selected.xml" target-dir="res/drawable"/>
